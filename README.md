@@ -12,7 +12,7 @@ Open source Visual Notes App created using Flutter with SQFLite, Riverpod and Mo
     <img src="https://user-images.githubusercontent.com/70890146/148673158-be663178-1759-4528-9dca-dd4856d7468e.jpg" alt="Image" width="260"/>
     <img src="https://user-images.githubusercontent.com/70890146/148673159-fa3b450e-1b4b-49c1-915d-c9aa58559dc4.jpg" alt="Image" width="260"/>
     <img src="https://user-images.githubusercontent.com/70890146/148673180-ba01d7f5-cb66-4a0e-a820-674827f6c2e1.jpg" alt="Image" width="260"/>
-    <img src="https://user-images.githubusercontent.com/70890146/148673439-1bf81918-875e-42fb-b28d-6f227331f396.jpg" alt="Image" width="260"/>
+    <img src="https://user-images.githubusercontent.com/70890146/148673837-e334cabe-d7c8-4219-93d0-f2c79855993b.jpg" alt="Image" width="260"/>
     <img src="https://user-images.githubusercontent.com/70890146/148673824-f55f0744-029d-41b6-9a71-69343404af99.jpg" alt="Image" width="260"/>
 </p>
 
