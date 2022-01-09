@@ -1,0 +1,18 @@
+Map<String, String> coreAr = {
+  'appName': 'Visual Notes',
+  'fontFamily': 'tajawal',
+  'dateFormat': 'ar',
+  'oops': 'عذراً!',
+  'somethingWentWrong': 'لقد حدث خطاً.',
+  'pleaseTryAgainLater': 'حاول مرة أخرى لاحقاً!',
+  "ThisFieldIsEmpty": "هذا الحقل فارغ",
+  "pleaseEnterOnlyNumericValues": "الرجاء إدخال أرقام فقط",
+  "idMustBeAtMost30Numbers": "لا يمكن إدخال أكثر من ٣٠ رقم",
+  "titleMustBeAtMost30Letters": "العنوان لا يمكن أن يتخطى ٣٠ حرف",
+  'edit': 'تعديل',
+  'done': 'تم',
+  'OK': 'حسناً',
+  'chooseOption': 'اختر طريقة التقاط الصورة',
+  'camera': 'الكاميرا',
+  'gallery': 'المعرض',
+};

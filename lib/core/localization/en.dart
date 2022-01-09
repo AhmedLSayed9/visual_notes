@@ -1,0 +1,18 @@
+Map<String, String> coreEn = {
+  'appName': 'Visual Notes',
+  'fontFamily': 'poppins',
+  'dateFormat': 'en',
+  'oops': 'Oops!',
+  'somethingWentWrong': 'Something went wrong.',
+  'pleaseTryAgainLater': 'Please try again later!',
+  "ThisFieldIsEmpty": "This field is empty",
+  "pleaseEnterOnlyNumericValues": "Please enter only numeric values",
+  "idMustBeAtMost30Numbers": "ID must be at most 30 numbers",
+  "titleMustBeAtMost30Letters": "Title must be at most 30 Letters",
+  'edit': 'Edit',
+  'done': 'Done',
+  'OK': 'OK',
+  'chooseOption': 'Choose Option',
+  'camera': 'Camera',
+  'gallery': 'Gallery',
+};

@@ -1,0 +1,4 @@
+enum NoteStatus {
+  open,
+  closed,
+}
