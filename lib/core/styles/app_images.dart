@@ -19,7 +19,6 @@ class AppImages {
   static const String cameraIcon = coreImagesPath + 'camera.png';
   static const String placeHolderImage = coreImagesPath + 'place_holder.png';
   static const String loadingIndicator = jsonPath + 'loading.json';
-
   //Dialog Widget Icons
   static const String location = dialogWidgetIconsPath + 'location.png';
   static const String ask = dialogWidgetIconsPath + 'ask.png';
