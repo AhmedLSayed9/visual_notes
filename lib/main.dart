@@ -23,7 +23,7 @@ Future main() async {
   );
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({
     required this.locale,
     required this.theme,
@@ -32,33 +32,6 @@ class MyApp extends StatefulWidget {
 
   final Locale locale;
   final ThemeMode theme;
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeMetrics() {
-    final _currentOrientation = ScreenUtil().orientation;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      if (_currentOrientation != ScreenUtil().orientation) {
-        Get.forceAppUpdate();
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,22 +44,28 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           minTextAdapt: true,
           builder: () => AnnotatedRegion<SystemUiOverlayStyle>(
             value: const SystemUiOverlayStyle(
+              // For both Android + iOS
               statusBarColor: Colors.transparent,
-              //For applications with a light background:
-              statusBarIconBrightness: Brightness.dark,
+              // For apps with a light background:
               // For Android (dark icons)
-              statusBarBrightness: Brightness.light, // For iOS (dark icons)
+              statusBarIconBrightness: Brightness.dark,
+              // For iOS (dark icons)
+              statusBarBrightness: Brightness.light,
             ),
             child: GestureDetector(
               onTap: () {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: GetMaterialApp(
+                builder: (context, widget) {
+                  ScreenUtil.setContext(context);
+                  return widget!;
+                },
                 debugShowCheckedModeBanner: false,
                 title: 'Visual Notes',
                 color: AppColors.primaryColor,
                 translations: LanguageTranslation(),
-                locale: widget.locale,
+                locale: locale,
                 fallbackLocale: const Locale('en'),
                 localizationsDelegates: const [
                   GlobalMaterialLocalizations.delegate,
@@ -96,7 +75,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                   Locale('en'),
                   Locale('ar'),
                 ],
-                themeMode: widget.theme,
+                themeMode: theme,
                 theme: AppThemes.lightTheme,
                 darkTheme: AppThemes.darkTheme,
                 initialRoute: RoutePaths.coreSplash,

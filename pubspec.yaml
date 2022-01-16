@@ -19,7 +19,7 @@ dependencies:
   get: ^4.6.1
 
   #Responsive
-  flutter_screenutil: ^5.0.2
+  flutter_screenutil: ^5.1.0
 
   #LocalStorage
   path: ^1.8.0
