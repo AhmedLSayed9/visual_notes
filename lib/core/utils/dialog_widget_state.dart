@@ -1,4 +1,4 @@
-import 'package:visual_notes/core/models/dialog_message_state.dart';
+import 'package:visual_notes/core/utils/dialog_message_state.dart';
 import 'package:visual_notes/core/styles/app_images.dart';
 
 Map<DialogWidgetState, dynamic> dialogMessageData = {

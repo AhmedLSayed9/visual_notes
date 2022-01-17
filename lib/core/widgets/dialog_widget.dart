@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:visual_notes/core/models/dialog_message_state.dart';
+import 'package:visual_notes/core/utils/dialog_message_state.dart';
 import 'package:visual_notes/core/services/navigation_service.dart';
 import 'package:visual_notes/core/styles/sizes.dart';
 import 'package:visual_notes/core/utils/dialog_widget_state.dart';

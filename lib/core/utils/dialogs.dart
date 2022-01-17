@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:visual_notes/core/localization/app_localization.dart';
-import 'package:visual_notes/core/models/dialog_message_state.dart';
+import 'package:visual_notes/core/utils/dialog_message_state.dart';
 import 'package:visual_notes/core/services/navigation_service.dart';
 import 'package:visual_notes/core/widgets/dialog_widget.dart';
 

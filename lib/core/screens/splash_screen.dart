@@ -56,7 +56,7 @@ class _SplashState extends ConsumerState<Splash> {
                   curve: Curves.easeIn,
                   controller: _logoFadeController,
                   child: Lottie.asset(
-                    'assets/json/splash_animation.json',
+                    AppImages.splashAnimation,
                     width: Sizes.splashLogoSize,
                     height: Sizes.splashLogoSize,
                   ),

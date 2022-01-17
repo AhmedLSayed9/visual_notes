@@ -14,7 +14,7 @@ import 'package:visual_notes/modules/add_edit_note/components/note_status_compon
 import 'package:visual_notes/modules/add_edit_note/viewmodels/add_note_viewmodel.dart';
 import 'package:visual_notes/modules/home/models/visual_note_model.dart';
 
-class AddEditNoteScreen extends ConsumerWidget {
+class AddEditNoteScreen extends StatelessWidget {
   final VisualNoteModel? visualNoteModel;
 
   const AddEditNoteScreen({
@@ -23,9 +23,8 @@ class AddEditNoteScreen extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, ref) {
+  Widget build(BuildContext context) {
     final bool isNewNote = visualNoteModel == null;
-    final addNoteVM = ref.watch(addNoteViewModel(visualNoteModel));
 
     return PopUpPage(
       appBarWithBack: true,
@@ -36,76 +35,81 @@ class AddEditNoteScreen extends ConsumerWidget {
         ),
       ],
       resizeToAvoidBottomInset: true,
-      child: addNoteVM.isLoading
-          ? LoadingIndicators.instance.smallLoadingAnimation(context)
-          : SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: Sizes.screenVPaddingDefault,
-                  horizontal: Sizes.screenHPaddingDefault,
-                ),
-                child: Form(
-                  key: addNoteVM.formKey,
-                  child: Column(
-                    children: <Widget>[
-                      NoteImageComponent(
-                        addNoteVM: addNoteVM,
+      child: Consumer(
+        builder: (context, ref, child) {
+          final addNoteVM = ref.watch(addNoteViewModel(visualNoteModel));
+          return addNoteVM.isLoading
+              ? LoadingIndicators.instance.smallLoadingAnimation(context)
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: Sizes.screenVPaddingDefault,
+                      horizontal: Sizes.screenHPaddingDefault,
+                    ),
+                    child: Form(
+                      key: addNoteVM.formKey,
+                      child: Column(
+                        children: <Widget>[
+                          NoteImageComponent(
+                            addNoteVM: addNoteVM,
+                          ),
+                          SizedBox(
+                            height: Sizes.vMarginMedium,
+                          ),
+                          NoteDateComponent(
+                            addNoteVM: addNoteVM,
+                          ),
+                          SizedBox(
+                            height: Sizes.vMarginMedium,
+                          ),
+                          AddNoteTextFieldComponent(
+                            title: tr('noteId'),
+                            hint: tr('enterNoteId'),
+                            controller: addNoteVM.noteIdController,
+                            validator: addNoteVM.validateID(),
+                            keyboardType: TextInputType.number,
+                          ),
+                          AddNoteTextFieldComponent(
+                            title: tr('noteTitle'),
+                            hint: tr('enterNoteTitle'),
+                            controller: addNoteVM.noteTitleController,
+                            validator: addNoteVM.validateTitle(),
+                            keyboardType: TextInputType.text,
+                          ),
+                          AddNoteTextFieldComponent(
+                            title: tr('noteDescription'),
+                            hint: tr('enterNoteDescription'),
+                            controller: addNoteVM.noteDescriptionController,
+                            validator: addNoteVM.validateDescription(),
+                            keyboardType: TextInputType.multiline,
+                            isMultiLine: true,
+                            maxLines: 4,
+                          ),
+                          NoteStatusComponent(
+                            addNoteVM: addNoteVM,
+                          ),
+                          SizedBox(
+                            height: Sizes.vMarginHighest,
+                          ),
+                          CustomButton(
+                            text: isNewNote ? tr('add') : tr('done'),
+                            onPressed: () {
+                              if (addNoteVM.validateNote()) {
+                                if (isNewNote) {
+                                  addNoteVM.saveNote();
+                                } else {
+                                  addNoteVM.updateNote();
+                                }
+                              }
+                            },
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: Sizes.vMarginMedium,
-                      ),
-                      NoteDateComponent(
-                        addNoteVM: addNoteVM,
-                      ),
-                      SizedBox(
-                        height: Sizes.vMarginMedium,
-                      ),
-                      AddNoteTextFieldComponent(
-                        title: tr('noteId'),
-                        hint: tr('enterNoteId'),
-                        controller: addNoteVM.noteIdController,
-                        validator: addNoteVM.validateID(),
-                        keyboardType: TextInputType.number,
-                      ),
-                      AddNoteTextFieldComponent(
-                        title: tr('noteTitle'),
-                        hint: tr('enterNoteTitle'),
-                        controller: addNoteVM.noteTitleController,
-                        validator: addNoteVM.validateTitle(),
-                        keyboardType: TextInputType.text,
-                      ),
-                      AddNoteTextFieldComponent(
-                        title: tr('noteDescription'),
-                        hint: tr('enterNoteDescription'),
-                        controller: addNoteVM.noteDescriptionController,
-                        validator: addNoteVM.validateDescription(),
-                        keyboardType: TextInputType.multiline,
-                        isMultiLine: true,
-                        maxLines: 4,
-                      ),
-                      NoteStatusComponent(
-                        addNoteVM: addNoteVM,
-                      ),
-                      SizedBox(
-                        height: Sizes.vMarginHighest,
-                      ),
-                      CustomButton(
-                        text: isNewNote ? tr('add') : tr('done'),
-                        onPressed: () {
-                          if (addNoteVM.validateNote()) {
-                            if (isNewNote) {
-                              addNoteVM.saveNote();
-                            } else {
-                              addNoteVM.updateNote();
-                            }
-                          }
-                        },
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            ),
+                );
+        },
+      ),
     );
   }
 }

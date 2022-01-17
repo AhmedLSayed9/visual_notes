@@ -12,14 +12,13 @@ import 'package:visual_notes/modules/home/components/note_dismiss_background_com
 import 'package:visual_notes/modules/home/components/note_list_item_component.dart';
 import 'package:visual_notes/modules/home/viewmodels/notes_viewmodel.dart';
 
-class VisualNotesScreen extends ConsumerWidget {
+class VisualNotesScreen extends StatelessWidget {
   VisualNotesScreen({Key? key}) : super(key: key);
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  Widget build(BuildContext context, ref) {
-    final notesVM = ref.watch(notesViewModel);
+  Widget build(BuildContext context) {
     return PopUpPage(
       scaffoldKey: scaffoldKey,
       appBarWithMenu: true,
@@ -33,69 +32,76 @@ class VisualNotesScreen extends ConsumerWidget {
       drawer: MainDrawer(
         scaffoldKey: scaffoldKey,
       ),
-      child: notesVM.isLoading
-          ? LoadingIndicators.instance.smallLoadingAnimation(context)
-          : notesVM.notesList.isEmpty
-              ? CustomText.h4(
-                  context,
-                  tr('thereAreNoVisualNotes'),
-                  color: AppColors.grey,
-                  alignment: Alignment.center,
-                )
-              : Column(
-                  children: [
-                    if (notesVM.selectedNotesIds.isNotEmpty)
-                      MultiSelectionHeaderComponent(
-                        notesVM: notesVM,
-                      ),
-                    Expanded(
-                      child: ListView.separated(
-                        padding: EdgeInsets.symmetric(
-                          vertical: Sizes.screenVPaddingDefault,
-                          horizontal: Sizes.screenHPaddingDefault,
-                        ),
-                        itemBuilder: (context, index) {
-                          return Dismissible(
-                            key: Key(notesVM.notesList[index].noteId),
-                            direction: notesVM.selectedNotesIds.isNotEmpty
-                                ? DismissDirection.none
-                                : DismissDirection.horizontal,
-                            onDismissed: (direction) {
-                              notesVM.deleteNote(
-                                visualNoteModel: notesVM.notesList[index],
+      child: Consumer(
+        builder: (context, ref, child) {
+          final notesVM = ref.watch(notesViewModel);
+          return notesVM.isLoading
+              ? LoadingIndicators.instance.smallLoadingAnimation(context)
+              : notesVM.notesList.isEmpty
+                  ? CustomText.h4(
+                      context,
+                      tr('thereAreNoVisualNotes'),
+                      color: AppColors.grey,
+                      alignment: Alignment.center,
+                    )
+                  : Column(
+                      children: [
+                        if (notesVM.selectedNotesIds.isNotEmpty)
+                          MultiSelectionHeaderComponent(
+                            notesVM: notesVM,
+                          ),
+                        Expanded(
+                          child: ListView.separated(
+                            padding: EdgeInsets.symmetric(
+                              vertical: Sizes.screenVPaddingDefault,
+                              horizontal: Sizes.screenHPaddingDefault,
+                            ),
+                            itemBuilder: (context, index) {
+                              return Dismissible(
+                                key: Key(notesVM.notesList[index].noteId),
+                                direction: notesVM.selectedNotesIds.isNotEmpty
+                                    ? DismissDirection.none
+                                    : DismissDirection.horizontal,
+                                onDismissed: (direction) {
+                                  notesVM.deleteNote(
+                                    visualNoteModel: notesVM.notesList[index],
+                                  );
+                                },
+                                background:
+                                    const NoteDismissBackgroundComponent(),
+                                child: GestureDetector(
+                                  onTap: notesVM.selectedNotesIds.isNotEmpty
+                                      ? () {
+                                          notesVM.toggleNoteSelection(
+                                            noteId:
+                                                notesVM.notesList[index].noteId,
+                                          );
+                                        }
+                                      : null,
+                                  onLongPress: () {
+                                    notesVM.toggleNoteSelection(
+                                      noteId: notesVM.notesList[index].noteId,
+                                    );
+                                  },
+                                  child: NoteListItemComponent(
+                                    visualNoteModel: notesVM.notesList[index],
+                                    isSelectedNote: notesVM.isSelectedNote(
+                                      noteId: notesVM.notesList[index].noteId,
+                                    ),
+                                  ),
+                                ),
                               );
                             },
-                            background: const NoteDismissBackgroundComponent(),
-                            child: GestureDetector(
-                              onTap: notesVM.selectedNotesIds.isNotEmpty
-                                  ? () {
-                                      notesVM.toggleNoteSelection(
-                                        noteId: notesVM.notesList[index].noteId,
-                                      );
-                                    }
-                                  : null,
-                              onLongPress: () {
-                                notesVM.toggleNoteSelection(
-                                  noteId: notesVM.notesList[index].noteId,
-                                );
-                              },
-                              child: NoteListItemComponent(
-                                visualNoteModel: notesVM.notesList[index],
-                                isSelectedNote: notesVM.isSelectedNote(
-                                  noteId: notesVM.notesList[index].noteId,
-                                ),
-                              ),
+                            separatorBuilder: (context, index) => SizedBox(
+                              height: Sizes.vMarginMedium,
                             ),
-                          );
-                        },
-                        separatorBuilder: (context, index) => SizedBox(
-                          height: Sizes.vMarginMedium,
+                            itemCount: notesVM.notesList.length,
+                          ),
                         ),
-                        itemCount: notesVM.notesList.length,
-                      ),
-                    ),
-                  ],
-                ),
+                      ],
+                    );
+        },
+      ),
     );
   }
 }

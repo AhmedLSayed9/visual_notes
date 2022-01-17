@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:visual_notes/core/localization/app_localization.dart';
-import 'package:visual_notes/core/styles/sizes.dart';
 
 class FontStyles {
   static get fontFamily => tr('fontFamily');
@@ -16,12 +14,4 @@ class FontStyles {
   static const fontWeightExtraLight = FontWeight.w200;
   static const fontWeightThin = FontWeight.w100;
   static const fontStyleNormal = FontStyle.normal;
-
-  static get mapSearchBarFontStyle => TextStyle(
-        fontSize: Sizes.fontSizes['h4'],
-        color: Get.context!.textTheme.subtitle1!.color,
-        fontFamily: fontFamily,
-        fontWeight: fontWeightNormal,
-        fontStyle: fontStyleNormal,
-      );
 }

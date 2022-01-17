@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:visual_notes/core/localization/app_localization.dart';
 import 'package:visual_notes/core/services/init_services/theme_service.dart';
 import 'package:visual_notes/core/styles/app_images.dart';
@@ -14,7 +15,7 @@ class ServiceInitializer {
     List futures = [
       initializeLocalization(),
       initializeTheme(),
-      initializeScreensOrientation(),
+      //initializeScreensOrientation(),
     ];
     List<dynamic> result = await Future.wait<dynamic>([...futures]);
     return result;
@@ -29,9 +30,9 @@ class ServiceInitializer {
   }
 
   initializeScreensOrientation() async {
-    /*await SystemChrome.setPreferredOrientations(
+    await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp],
-    );*/
+    );
   }
 
   Future initializeData() async {

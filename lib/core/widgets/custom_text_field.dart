@@ -25,7 +25,6 @@ class CustomTextField extends Container {
     String? initialValue,
     TextInputType? keyboardType,
     TextInputAction? textInputAction,
-    //TextStyle? style,
     TextDirection? textDirection,
     FormFieldValidator<String>? validator,
     ValueChanged<String>? onChanged,

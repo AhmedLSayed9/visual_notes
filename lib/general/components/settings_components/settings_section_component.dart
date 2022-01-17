@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:visual_notes/core/styles/sizes.dart';
 import 'package:visual_notes/core/widgets/custom_text.dart';
-import 'package:visual_notes/general/components/settings_tile_component.dart';
+import 'package:visual_notes/general/components/settings_components/settings_tile_component.dart';
 
 class SettingsSectionComponent extends StatelessWidget {
   const SettingsSectionComponent({
