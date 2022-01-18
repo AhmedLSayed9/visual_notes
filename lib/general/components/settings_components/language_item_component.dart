@@ -50,9 +50,10 @@ class LanguageItemComponent extends ConsumerWidget {
                 ),
                 Consumer(
                   builder: (context, ref, child) {
-                    final _settingsVM = ref.watch(settingsViewModel);
-                    return (_settingsVM.selectedLanguageCode ==
-                            languageModel.code)
+                    final _selectedLanguage = ref.watch(
+                        settingsViewModel.select(
+                            (settingsVM) => settingsVM.selectedLanguageCode));
+                    return (_selectedLanguage == languageModel.code)
                         ? CircleAvatar(
                             backgroundColor: Theme.of(context)
                                 .colorScheme

@@ -69,7 +69,7 @@ class AddNoteViewModel with ChangeNotifier {
 
   bool validateUniqueID() {
     bool _isUniqueID = true;
-    ref.watch(notesViewModel).notesList.forEach((note) {
+    ref.read(notesViewModel).notesList.forEach((note) {
       if (note.noteId == noteIdController.text &&
           note.noteId != visualNoteModel?.noteId) {
         CustomSnackBar.showCommonRawSnackBar(
@@ -167,7 +167,7 @@ class AddNoteViewModel with ChangeNotifier {
     }
     isLoading = false;
     notifyListeners();
-    ref.watch(notesViewModel).getNotes();
+    ref.read(notesViewModel).getNotes();
     NavigationService.goBack();
   }
 
@@ -214,7 +214,7 @@ class AddNoteViewModel with ChangeNotifier {
     }
     isLoading = false;
     notifyListeners();
-    ref.watch(notesViewModel).getNotes();
+    ref.read(notesViewModel).getNotes();
     NavigationService.goBack();
   }
 
