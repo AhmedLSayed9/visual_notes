@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:visual_notes/modules/home/models/visual_note_model.dart';
+import 'package:visual_notes/modules/home/utils/constants.dart';
 
 class NotesRepo {
   NotesRepo._();
@@ -16,7 +17,7 @@ class NotesRepo {
   }
 
   Future<Database> initDb() async {
-    String _path = join(await getDatabasesPath(), 'Notes.db');
+    String _path = join(await getDatabasesPath(), 'notes_database.db');
     Database _database = await openDatabase(
       _path,
       version: 1,
@@ -27,7 +28,7 @@ class NotesRepo {
 
   _onCreate(Database db, int version) async {
     await db.execute('''
-        CREATE TABLE Notes (
+        CREATE TABLE $notesTable (
         noteId TEXT PRIMARY KEY,
         date INTEGER NOT NULL,
         title TEXT NOT NULL,
@@ -39,7 +40,7 @@ class NotesRepo {
 
   Future<List<VisualNoteModel>> getAllNotes() async {
     Database _db = await database;
-    List<Map> _notesMaps = await _db.rawQuery('SELECT * FROM Notes');
+    List<Map> _notesMaps = await _db.rawQuery('SELECT * FROM $notesTable}');
     List<VisualNoteModel> _notesList = _notesMaps.isNotEmpty
         ? _notesMaps.map((note) => VisualNoteModel.fromMap(note)).toList()
         : [];
@@ -50,14 +51,10 @@ class NotesRepo {
     required VisualNoteModel visualNoteModel,
   }) async {
     Database _db = await database;
-    await _db.insert('Notes', {
-      'noteId': visualNoteModel.noteId,
-      'date': visualNoteModel.date,
-      'title': visualNoteModel.title,
-      'description': visualNoteModel.description,
-      'image': visualNoteModel.image,
-      'status': visualNoteModel.status,
-    });
+    await _db.insert(
+      notesTable,
+      visualNoteModel.toMap(),
+    );
   }
 
   Future deleteNote({
@@ -65,7 +62,7 @@ class NotesRepo {
   }) async {
     Database _db = await database;
     await _db.delete(
-      'Notes',
+      notesTable,
       where: 'noteId = ?',
       whereArgs: [noteId],
     );
@@ -77,15 +74,8 @@ class NotesRepo {
   }) async {
     Database _db = await database;
     await _db.update(
-      'Notes',
-      {
-        'noteId': visualNoteModel.noteId,
-        'date': visualNoteModel.date,
-        'title': visualNoteModel.title,
-        'description': visualNoteModel.description,
-        'image': visualNoteModel.image,
-        'status': visualNoteModel.status,
-      },
+      notesTable,
+      visualNoteModel.toMap(),
       where: 'noteId = ?',
       whereArgs: [oldNoteId],
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -95,7 +85,7 @@ class NotesRepo {
   Future deleteMultipleNotes({required List<String> notesIds}) async {
     Database _db = await database;
     await _db.delete(
-      'Notes',
+      notesTable,
       where: 'noteId IN (${List.filled(notesIds.length, '?').join(',')})',
       whereArgs: notesIds,
     );
@@ -103,6 +93,6 @@ class NotesRepo {
 
   Future deleteAllNotes() async {
     Database _db = await database;
-    await _db.rawDelete('DELETE * FROM Notes');
+    await _db.rawDelete('DELETE * FROM $notesTable');
   }
 }
