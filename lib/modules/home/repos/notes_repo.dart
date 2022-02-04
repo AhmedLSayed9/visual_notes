@@ -40,7 +40,7 @@ class NotesRepo {
 
   Future<List<VisualNoteModel>> getAllNotes() async {
     Database _db = await database;
-    List<Map> _notesMaps = await _db.rawQuery('SELECT * FROM $notesTable}');
+    List<Map> _notesMaps = await _db.rawQuery('SELECT * FROM $notesTable');
     List<VisualNoteModel> _notesList = _notesMaps.isNotEmpty
         ? _notesMaps.map((note) => VisualNoteModel.fromMap(note)).toList()
         : [];
