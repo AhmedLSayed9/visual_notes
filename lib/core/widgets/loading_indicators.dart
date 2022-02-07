@@ -14,6 +14,7 @@ class LoadingIndicators {
     double? width,
   }) {
     return Center(
+      key: const Key('smallLoadingAnimation'),
       child: Container(
         color: Colors.transparent,
         child: Lottie.asset(

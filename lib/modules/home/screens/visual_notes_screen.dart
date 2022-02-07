@@ -43,6 +43,7 @@ class VisualNotesScreen extends StatelessWidget {
                       tr('thereAreNoVisualNotes'),
                       color: AppColors.grey,
                       alignment: Alignment.center,
+                      key: const Key('noVisualNotes'),
                     )
                   : Column(
                       children: [

@@ -206,6 +206,7 @@ class CustomAppBar extends PreferredSize {
     Widget? backButtonWidget,
   }) {
     return IconButton(
+      key: const Key('backButton'),
       onPressed: () {
         NavigationService.goBack(result: result);
       },

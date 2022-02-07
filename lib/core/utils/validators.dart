@@ -6,33 +6,27 @@ class Validators {
 
   static final Validators instance = Validators._();
 
-  String? Function(String?)? validateInteger() {
-    return (value) {
-      if (value!.isEmpty) {
-        return tr("ThisFieldIsEmpty");
-      } else if (!value.isNumericOnly) {
-        return tr("pleaseEnterOnlyNumericValues");
-      } else if (value.toString().length > 30) {
-        return tr("idMustBeAtMost30Numbers");
-      }
-    };
+  String? validateInteger(String? value) {
+    if (value!.isEmpty) {
+      return tr("ThisFieldIsEmpty");
+    } else if (!value.isNumericOnly) {
+      return tr("pleaseEnterOnlyNumericValues");
+    } else if (value.toString().length > 30) {
+      return tr("idMustBeAtMost30Numbers");
+    }
   }
 
-  String? Function(String?)? validateTitle() {
-    return (value) {
-      if (value!.isEmpty) {
-        return tr("ThisFieldIsEmpty");
-      } else if (value.toString().length > 30) {
-        return tr("titleMustBeAtMost30Letters");
-      }
-    };
+  String? validateTitle(String? value) {
+    if (value!.isEmpty) {
+      return tr("ThisFieldIsEmpty");
+    } else if (value.toString().length > 30) {
+      return tr("titleMustBeAtMost30Letters");
+    }
   }
 
-  String? Function(String?)? validateDescription() {
-    return (value) {
-      if (value!.isEmpty) {
-        return tr("ThisFieldIsEmpty");
-      }
-    };
+  String? validateDescription(String? value) {
+    if (value!.isEmpty) {
+      return tr("ThisFieldIsEmpty");
+    }
   }
 }

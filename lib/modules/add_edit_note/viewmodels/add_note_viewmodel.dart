@@ -20,8 +20,9 @@ final addNoteViewModel = ChangeNotifierProvider.family
   (ref, visualNote) => AddNoteViewModel(ref, visualNote),
 );
 
-class AddNoteViewModel with ChangeNotifier {
+class AddNoteViewModel extends ChangeNotifier {
   AddNoteViewModel(this.ref, this.visualNoteModel) {
+    notesRepo = ref.read(notesRepoProvider);
     if (visualNoteModel != null) {
       noteIdController.text = visualNoteModel!.noteId;
       noteTitleController.text = visualNoteModel!.title;
@@ -34,6 +35,7 @@ class AddNoteViewModel with ChangeNotifier {
 
   Ref ref;
   bool isLoading = false;
+  late NotesRepo notesRepo;
   final VisualNoteModel? visualNoteModel;
 
   final formKey = GlobalKey<FormState>();
@@ -55,16 +57,16 @@ class AddNoteViewModel with ChangeNotifier {
     return false;
   }
 
-  String? Function(String?)? validateID() {
-    return Validators.instance.validateInteger();
+  String? validateID(String? value) {
+    return Validators.instance.validateInteger(value);
   }
 
-  String? Function(String?)? validateTitle() {
-    return Validators.instance.validateTitle();
+  String? validateTitle(String? value) {
+    return Validators.instance.validateTitle(value);
   }
 
-  String? Function(String?)? validateDescription() {
-    return Validators.instance.validateDescription();
+  String? validateDescription(String? value) {
+    return Validators.instance.validateDescription(value);
   }
 
   bool validateUniqueID() {
@@ -151,7 +153,7 @@ class AddNoteViewModel with ChangeNotifier {
     notifyListeners();
     try {
       final _imagePath = await saveImageToLocalStorage();
-      await NotesRepo.instance.addNote(
+      await notesRepo.addNote(
         visualNoteModel: VisualNoteModel(
           noteId: noteIdController.text,
           date: DateParser.instance.convertDateToUTCEpoch(noteDate!),
@@ -191,7 +193,7 @@ class AddNoteViewModel with ChangeNotifier {
       final _imagePath = noteImage != null || isIdUpdated()
           ? await saveImageToLocalStorage()
           : visualNoteModel!.image;
-      await NotesRepo.instance.updateNote(
+      await notesRepo.updateNote(
         visualNoteModel: VisualNoteModel(
           noteId: noteIdController.text,
           date: DateParser.instance.convertDateToUTCEpoch(noteDate!),

@@ -1,14 +1,13 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:visual_notes/modules/home/models/visual_note_model.dart';
 import 'package:visual_notes/modules/home/utils/constants.dart';
 
+final notesRepoProvider = Provider<NotesRepo>((ref) => NotesRepo());
+
 class NotesRepo {
-  NotesRepo._();
-
-  static final instance = NotesRepo._();
-
-  static Database? _database;
+  Database? _database;
 
   Future<Database> get database async {
     if (_database != null) return _database!;

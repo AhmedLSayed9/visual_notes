@@ -8,14 +8,18 @@ import 'package:visual_notes/modules/home/models/visual_note_model.dart';
 import 'package:visual_notes/modules/home/repos/notes_repo.dart';
 
 final notesViewModel =
-    ChangeNotifierProvider<NotesViewModel>((ref) => NotesViewModel());
+    ChangeNotifierProvider<NotesViewModel>((ref) => NotesViewModel(ref));
 
-class NotesViewModel with ChangeNotifier {
-  NotesViewModel() {
+class NotesViewModel extends ChangeNotifier {
+  NotesViewModel(this.ref) {
+    notesRepo = ref.read(notesRepoProvider);
     getNotes();
   }
 
   bool isLoading = false;
+  Ref ref;
+  late NotesRepo notesRepo;
+
   List<VisualNoteModel> notesList = [];
   List<String> selectedNotesIds = [];
 
@@ -23,7 +27,7 @@ class NotesViewModel with ChangeNotifier {
     isLoading = true;
     notifyListeners();
     try {
-      notesList = await NotesRepo.instance.getAllNotes();
+      notesList = await notesRepo.getAllNotes();
     } catch (e) {
       debugPrint(e.toString());
       AppDialogs.showDefaultErrorDialog();
@@ -37,7 +41,7 @@ class NotesViewModel with ChangeNotifier {
     notifyListeners();
     try {
       notesList.removeWhere((note) => note.noteId == visualNoteModel.noteId);
-      NotesRepo.instance.deleteNote(noteId: visualNoteModel.noteId);
+      notesRepo.deleteNote(noteId: visualNoteModel.noteId);
       ImageSelector.instance
           .deleteImageLocally(imageFile: File(visualNoteModel.image));
     } catch (e) {
@@ -54,7 +58,7 @@ class NotesViewModel with ChangeNotifier {
     try {
       deleteSelectedNotesLocalImages();
       notesList.removeWhere((note) => isSelectedNote(noteId: note.noteId));
-      NotesRepo.instance.deleteMultipleNotes(notesIds: selectedNotesIds);
+      notesRepo.deleteMultipleNotes(notesIds: selectedNotesIds);
       clearNoteSelection();
     } catch (e) {
       debugPrint(e.toString());

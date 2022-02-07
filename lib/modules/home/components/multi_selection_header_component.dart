@@ -34,6 +34,7 @@ class MultiSelectionHeaderComponent extends StatelessWidget {
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
             splashRadius: Sizes.iconsSizes['s5'],
+            key: const Key('clearSelectedItems'),
           ),
           SizedBox(
             width: Sizes.hMarginSmall,
@@ -47,6 +48,7 @@ class MultiSelectionHeaderComponent extends StatelessWidget {
                 : notesVM.selectedNotesIds.length.toString(),
             weight: FontStyles.fontWeightMedium,
             overflow: TextOverflow.ellipsis,
+            key: const Key('selectedItems'),
           ),
           const Spacer(),
           IconButton(
@@ -61,6 +63,7 @@ class MultiSelectionHeaderComponent extends StatelessWidget {
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
             splashRadius: Sizes.iconsSizes['s5'],
+            key: const Key('deleteItemsButton'),
           ),
         ],
       ),
