@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:visual_notes/core/localization/app_localization.dart';
 import 'package:visual_notes/core/services/init_services/theme_service.dart';
+import 'package:visual_notes/core/services/navigation_service.dart';
 import 'package:visual_notes/core/styles/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ class ServiceInitializer {
 
   initializeSettings() async {
     //This method is used to initialize any service before the app runs (in main method)
+    initializeGetNavigationKey();
     List futures = [
       initializeLocalization(),
       initializeTheme(),
@@ -19,6 +21,10 @@ class ServiceInitializer {
     ];
     List<dynamic> result = await Future.wait<dynamic>([...futures]);
     return result;
+  }
+
+  initializeGetNavigationKey() {
+    Get.addKey(NavigationService.navigationKey);
   }
 
   initializeLocalization() async {
@@ -44,7 +50,9 @@ class ServiceInitializer {
   }
 
   cacheDefaultImages() async {
-    precacheImage(const AssetImage(AppImages.appLogoIcon), Get.context!);
-    precacheImage(const AssetImage(AppImages.splash), Get.context!);
+    precacheImage(
+        const AssetImage(AppImages.appLogoIcon), NavigationService.context);
+    precacheImage(
+        const AssetImage(AppImages.splash), NavigationService.context);
   }
 }

@@ -10,6 +10,11 @@ enum NavigationMethod {
 }
 
 class NavigationService {
+  static final GlobalKey<NavigatorState> navigationKey =
+      GlobalKey<NavigatorState>();
+
+  static get context => navigationKey.currentState!.context;
+
   static Future<dynamic> navigateTo({
     bool isNamed = false,
     required NavigationMethod navigationMethod,
@@ -24,7 +29,7 @@ class NavigationService {
   }) async {
     assert(navigationMethod != NavigationMethod.pop);
     assert(navigationMethod != NavigationMethod.pushReplacementAll);
-    FocusScope.of(Get.context!).requestFocus(FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
     if (isNamed) {
       return await _getNavigationMethod(
         navigationMethod: navigationMethod,
@@ -57,7 +62,7 @@ class NavigationService {
     bool canPop = true,
     int? id,
   }) {
-    FocusScope.of(Get.context!).requestFocus(FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
     Get.back<T>(
       canPop: canPop,
       id: id,
@@ -69,7 +74,7 @@ class NavigationService {
   static void popUntil({
     required RoutePredicate predicate,
   }) {
-    FocusScope.of(Get.context!).requestFocus(FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
     Get.until(predicate);
   }
 
@@ -83,7 +88,7 @@ class NavigationService {
     Curve? curve,
     Duration? duration,
   }) {
-    FocusScope.of(Get.context!).requestFocus(FocusNode());
+    FocusScope.of(context).requestFocus(FocusNode());
     if (isNamed) {
       _getNavigationMethod(
         navigationMethod: NavigationMethod.pushReplacementAll,

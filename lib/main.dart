@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:visual_notes/core/localization/all_translation_keys.dart';
 import 'package:visual_notes/core/services/init_services/services_initializer.dart';
+import 'package:visual_notes/core/services/navigation_service.dart';
 import 'package:visual_notes/core/styles/app_colors.dart';
 import 'package:visual_notes/core/styles/app_themes.dart';
 import 'package:visual_notes/core/utils/routes.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
                 FocusScope.of(context).requestFocus(FocusNode());
               },
               child: GetMaterialApp(
+                navigatorKey: NavigationService.navigationKey,
                 builder: (context, widget) {
                   ScreenUtil.setContext(context);
                   return widget!;

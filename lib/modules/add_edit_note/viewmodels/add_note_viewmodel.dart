@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:visual_notes/core/localization/app_localization.dart';
 import 'package:visual_notes/core/services/date_parser.dart';
 import 'package:visual_notes/core/services/date_picker.dart';
@@ -75,7 +74,7 @@ class AddNoteViewModel extends ChangeNotifier {
       if (note.noteId == noteIdController.text &&
           note.noteId != visualNoteModel?.noteId) {
         CustomSnackBar.showCommonRawSnackBar(
-          Get.context!,
+          NavigationService.context,
           title: tr('idAlreadyExist'),
           description: tr('pleaseAddDifferentNoteID'),
         );
@@ -89,19 +88,19 @@ class AddNoteViewModel extends ChangeNotifier {
     bool _validate = false;
     if (noteImage == null && visualNoteModel == null) {
       CustomSnackBar.showCommonRawSnackBar(
-        Get.context!,
+        NavigationService.context,
         title: tr('noImageSelected'),
         description: tr('pleaseSelectNoteImage'),
       );
     } else if (noteDate == null) {
       CustomSnackBar.showCommonRawSnackBar(
-        Get.context!,
+        NavigationService.context,
         title: tr('noDateSelected'),
         description: tr('pleaseSelectNoteDate'),
       );
     } else if (noteStatus == null) {
       CustomSnackBar.showCommonRawSnackBar(
-        Get.context!,
+        NavigationService.context,
         title: tr('noStatusSelected'),
         description: tr('pleaseSelectNoteStatus'),
       );
