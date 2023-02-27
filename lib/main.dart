@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
               ? const Size(414, 895)
               : const Size(895, 414),
           minTextAdapt: true,
-          builder: () => AnnotatedRegion<SystemUiOverlayStyle>(
+          builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
             value: const SystemUiOverlayStyle(
               // For both Android + iOS
               statusBarColor: Colors.transparent,
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
               child: GetMaterialApp(
                 navigatorKey: NavigationService.navigationKey,
                 builder: (context, widget) {
-                  ScreenUtil.setContext(context);
+                  ScreenUtil.init(context);
                   return widget!;
                 },
                 debugShowCheckedModeBanner: false,

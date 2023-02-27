@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
               ? const Size(414, 895)
               : const Size(895, 414),
           minTextAdapt: true,
-          builder: () {
+          builder: (context, child) {
             return GetMaterialApp(
               builder: (context, widget) {
-                ScreenUtil.setContext(context);
+                ScreenUtil.init(context);
                 return widget!;
               },
               home: VisualNotesScreen(),
